@@ -1,0 +1,80 @@
+import curses
+import ThreeD.Polygon3D as p3d
+
+pixel = ' '
+
+# TODO: Make an orange color using init_color
+curses.init_pair(1, curses.COLOR_RED, curses.COLOR_YELLOW)
+white = curses.color_pair(1)
+
+# If you're using this library, we assume that you've called curses.start_color() first
+def draw_line(screen, start, end):
+    __edge__(screen, start, end)
+
+
+def __edge__(screen, start, end):
+    global pixel, white
+    start = legalize(screen, start)
+    end = legalize(screen, end)
+    
+    screen.addch(int(start[1]), int(start[0]), pixel, white)
+    if start == end: #we're just drawing a point
+        return
+
+    if (abs(start[0] - end[0]) > abs(start[1] - end[1])):
+        slope = (start[1] - end[1]) / (1.0 * start[0] - end[0])
+        if start[0] > end[0]:
+            start, end = end, start
+        y = start[1]
+        for x in range(int(start[0]), int(end[0])):
+            if type(screen) == type([]):
+                screen.append((int(round(x)), int(y)))
+            else:
+                screen.addch(int(round(y)), int(x), pixel, white)
+            y += slope
+    else:
+        slope = (1.0 * start[0] - end[0]) / (start[1] - end[1])
+        if start[1] > end[1]:
+            start, end = end, start
+        x = start[0]
+        for y in range(int(start[1]), int(end[1])):
+            if type(screen) == type([]):
+                screen.append((int(x), int(round(y))))
+            else:
+                screen.addch(int(y), int(round(x)), pixel, white)
+            x += slope
+    if type(screen) != type([]):
+        screen.addch(int(end[1]), int(end[0]), pixel, white)
+    
+
+<<<<<<< .mine
+=======
+# For now, assuming that POLY is a (2D convex) quadrilateral
+def fill_polygon(screen, poly):
+    global pixel, white
+    boundary = []
+    for i in range(len(boundary)):
+        boundary += __edge__(boundary[i], boundary[(i+1)%len(boundary)])
+    boundary = split_by_x(boundary)
+    for x, L in boundary.items():
+        low  = min(L)
+        high = max(L)
+        draw_line(screen, (x,low), (x,high))
+
+>>>>>>> .r21
+
+def split_by_x(points):
+    result = {}
+    for x,y in points:
+        if x in result:
+            result[x].append(y)
+        else:
+            result[x] = [y]
+    return result
+    
+
+def legalize(screen, point):
+    height, width = screen.getmaxyx()
+    x = max(min(width-2, point[0]), 0) # TODO: Weird edge case find actual width
+    y = max(min(height-2, point[1]), 0) # of terminal
+    return x,y

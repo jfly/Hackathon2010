@@ -1,0 +1,33 @@
+import ThreeD.Polygon3D as p3d
+
+SIDE_LEN = 15
+HALF_SIDE_LEN = SIDE_LEN / 2.
+class Cube:
+    
+    def __init__(self):
+        self.polys = []
+        face1 = p3d.Polygon3D()
+        face1.add_points([(SIDE_LEN,SIDE_LEN,-HALF_SIDE_LEN), (SIDE_LEN,-SIDE_LEN,-HALF_SIDE_LEN), (-SIDE_LEN,-SIDE_LEN,-HALF_SIDE_LEN), (-SIDE_LEN,SIDE_LEN,-HALF_SIDE_LEN)])
+        face2 = p3d.Polygon3D()
+        face2.add_points([(SIDE_LEN,SIDE_LEN,HALF_SIDE_LEN), (SIDE_LEN,-SIDE_LEN,HALF_SIDE_LEN), (-SIDE_LEN,-SIDE_LEN,HALF_SIDE_LEN), (-SIDE_LEN,SIDE_LEN,HALF_SIDE_LEN)])
+        face3 = p3d.Polygon3D()
+        face3.add_points([(SIDE_LEN,SIDE_LEN,HALF_SIDE_LEN), (SIDE_LEN,SIDE_LEN,-HALF_SIDE_LEN), (SIDE_LEN,-SIDE_LEN,-HALF_SIDE_LEN), (SIDE_LEN,-SIDE_LEN,HALF_SIDE_LEN)])
+        face4 = p3d.Polygon3D()
+        face4.add_points([(-SIDE_LEN,SIDE_LEN,HALF_SIDE_LEN), (-SIDE_LEN,SIDE_LEN,-HALF_SIDE_LEN), (-SIDE_LEN,-SIDE_LEN,-HALF_SIDE_LEN), (-SIDE_LEN,-SIDE_LEN,HALF_SIDE_LEN)])
+        face5 = p3d.Polygon3D()
+        face5.add_points([(SIDE_LEN,SIDE_LEN,HALF_SIDE_LEN), (SIDE_LEN,SIDE_LEN,-HALF_SIDE_LEN), (-SIDE_LEN,SIDE_LEN,-HALF_SIDE_LEN), (-SIDE_LEN,SIDE_LEN,HALF_SIDE_LEN)])
+        face6 = p3d.Polygon3D()
+        face6.add_points([(SIDE_LEN,-SIDE_LEN,HALF_SIDE_LEN), (SIDE_LEN,-SIDE_LEN,-HALF_SIDE_LEN), (-SIDE_LEN,-SIDE_LEN,-HALF_SIDE_LEN), (-SIDE_LEN,-SIDE_LEN,HALF_SIDE_LEN)])
+        self.polys.append(face1)
+        self.polys.append(face2)
+        self.polys.append(face3)
+        self.polys.append(face4)
+        self.polys.append(face5)
+        self.polys.append(face6)
+        
+    def polygons(self):
+        return self.polys
+    
+    def rotate(self, rotation):
+        for poly in self.polys:
+            poly.rotate(rotation)

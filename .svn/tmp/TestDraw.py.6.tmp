@@ -1,0 +1,75 @@
+import curses
+from Cube import Cube
+
+def main(screen):
+    import ThreeD.Graphics2D as g2d # Fix later
+    from ThreeD.Canvas3D import Canvas3D
+    
+    try:
+        curses.curs_set(0)
+    except:
+        pass
+    curses.start_color()
+
+    screen.bkgd(' ', g2d.white)
+
+    cube = Cube()
+    canvas = Canvas3D()
+    canvas.add_polys(cube.polygons())
+    
+<<<<<<< .mine
+#    g2d.draw_line(screen, (0,0), (10,5))
+    screen.refresh()
+    screen.timeout(0)
+    while 1:
+        ch = screen.getch()
+        MOVE_AWAY = '<'
+        MOVE_CLOSER = '>'
+        ZOOM_OUT = ','
+        ZOOM_IN = '.'
+        RESET_VIEW = '1'
+        QUIT = '`'
+        if ch == ord(QUIT):
+            break
+        if ch == curses.KEY_LEFT:
+            cube.rotate(RotationMatrix.RotationMatrix().setRotation(1, -30./10))
+        if ch == curses.KEY_RIGHT:
+            cube.rotate(RotationMatrix.RotationMatrix().setRotation(1, 30./10))
+        if ch == curses.KEY_UP:
+            cube.rotate(RotationMatrix.RotationMatrix().setRotation(0, -30./10))
+        if ch == curses.KEY_DOWN:
+            cube.rotate(RotationMatrix.RotationMatrix().setRotation(0, 30./10))
+        if ch == ord(MOVE_AWAY):
+            canvas.offset_z += .5
+        if ch == ord(MOVE_CLOSER):
+            canvas.offset_z -= .5
+        if ch == ord(ZOOM_IN):
+            canvas.scale += .1
+        if ch == ord(ZOOM_OUT):
+            canvas.scale -= .1
+        if ch == ord(RESET_VIEW):
+            # TODO - it would be nice to have a good reset that stores our state!
+            cube = Cube()
+            canvas.clear_polys()
+            canvas.add_polys(cube.polygons())
+        
+        screen.erase()
+        canvas.draw(screen)
+        screen.addstr(15, 15, "zoom in " + ZOOM_IN)
+        screen.addstr(16, 15, "zoom out " + ZOOM_OUT)
+        screen.addstr(17, 15, "move away " + MOVE_AWAY)
+        screen.addstr(18, 15, "move closer " + MOVE_CLOSER)
+        screen.addstr(19, 15, "reset view " + RESET_VIEW)
+        screen.addstr(20, 15, "quit " + QUIT)
+=======
+    
+    #g2d.draw_line(screen, (0,0), (10,5), curses.COLOR_WHITE)
+    #canvas.draw(screen)
+    g2d.fill_polygon(screen, [(5,10), (10,5), (20,15), (15, 20)], curses.COLOR_BLUE)
+    g2d.draw_polygon(screen, [(5,10), (10,5), (20,15), (15, 20)])
+    #screen.refresh()
+    screen.getch()
+>>>>>>> .r27
+
+if __name__ == '__main__':
+    curses.wrapper(main)

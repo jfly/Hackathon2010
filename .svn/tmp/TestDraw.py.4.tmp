@@ -1,0 +1,42 @@
+import curses
+from Cube import Cube
+from ThreeD import RotationMatrix
+
+def main(screen):
+    import ThreeD.Graphics2D as g2d # Fix later
+    from ThreeD.Canvas3D import Canvas3D
+    
+    try:
+        curses.curs_set(0)
+    except:
+        pass
+    curses.start_color()
+
+    cube = Cube()
+    canvas = Canvas3D()
+    canvas.add_polys(cube.polygons())
+    
+<<<<<<< .mine
+#    g2d.draw_line(screen, (0,0), (10,5))
+=======
+    
+    #g2d.draw_line(screen, (0,0), (10,5))
+    #canvas.draw(screen)
+    g2d.fill_polygon(screen, [(0,0), (10,5), (15,20), (20,10)])
+>>>>>>> .r21
+    screen.refresh()
+    screen.timeout(0)
+    while 1:
+        ch = screen.getch()
+        if ch == ord('q'):
+            break
+        if ch == curses.KEY_UP:
+            cube.rotate(RotationMatrix.RotationMatrix().setRotation(1, 30./5))
+#            canvas.offsetX(canvas.offset_x + .5)
+        
+        screen.erase()
+        canvas.draw(screen)
+        screen.addstr(15, 15, "HELLO" + str(ch))
+
+if __name__ == '__main__':
+    curses.wrapper(main)

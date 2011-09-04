@@ -1,0 +1,21 @@
+class Polygon3D:
+    def __init__(self):
+        self.points = []
+
+    def add_point(self, point):
+        self.points.append(point)
+
+    def add_points(self, pts):
+        self.points += pts
+<<<<<<< .mine
+        
+    def rotate(self, rotation):
+        for i in range(0, len(self.points)):
+            self.points[i] = rotation.multiplyPoint(self.points[i])
+             
+=======
+
+    
+    def get_points(self):
+        return self.points
+>>>>>>> .r21
